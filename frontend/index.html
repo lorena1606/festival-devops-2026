@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacific DevOps Music Fest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card">
+        <h1>Pacific DevOps Music Fest 🎧</h1>
+        <p class="date">📅 Fecha: 15 de Julio de 2026</p>
+        
+        <div class="lineup">
+            <h3>Lineup Oficial:</h3>
+            <ul id="artists-list">
+                <li>Cargando artistas...</li>
+            </ul>
+        </div>
+
+        <button class="btn-tickets" onclick="alert('¡Redireccionando a la pasarela de pagos segura!')">Comprar Tickets 🎟️</button>
+    </div>
+
+    <script>
+        // Consumimos el backend usando el puerto expuesto del API
+        fetch('http://localhost:5000/api/concierto')
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('artists-list');
+                list.innerHTML = '';
+                data.artistas.forEach(artista => {
+                    const li = document.createElement('li');
+                    li.textContent = artista;
+                    list.appendChild(li);
+                });
+            })
+            .catch(err => {
+                console.error("Error cargando artistas:", err);
+                document.getElementById('artists-list').innerHTML = "<li>Error al conectar con el Backend API</li>";
+            });
+    </script>
+</body>
+</html>
