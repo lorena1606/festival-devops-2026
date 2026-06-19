@@ -21,3 +21,20 @@ Para construir las imágenes personalizadas y levantar los servicios (junto con 
 
 ```bash
 docker-compose up --build
+
+
+
+---
+
+## Integración Continua (CI) con GitHub Actions
+
+![CI Festival](https://github.com/lorena1606/festival-devops-2026/actions/workflows/ci.yml/badge.svg)
+
+[cite_start]Este repositorio cuenta con un flujo de trabajo de Integración Continua automatizado mediante **GitHub Actions** que se activa ante eventos de `push` y `pull_request` en la rama `main`[cite: 12].
+
+###  Validaciones del Workflow
+[cite_start]El pipeline automatiza la verificación de la estructura del proyecto asegurando la disponibilidad de los archivos críticos[cite: 4, 6]:
+* **Raíz:** Validación de la existencia del archivo `README.md`.
+* **Frontend:** Comprobación de los archivos esenciales de la interfaz (`frontend/index.html` y `frontend/style.css`).
+* **Backend:** Monitoreo del estado del archivo lógico del servidor (`backend/app.py`).
+
