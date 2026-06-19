@@ -1,13 +1,11 @@
-name: CI Festival Pipeline
+name: CI Festival
 
-# Aquí se define CUÁNDO se ejecuta (Push y Pull Request a main)
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
-# Aquí se definen las VALIDACIONES de los archivos
 jobs:
   validate-structure:
     runs-on: ubuntu-latest
@@ -16,26 +14,34 @@ jobs:
     - name: Checkout del código
       uses: actions/checkout@v4
 
-    - name: Validar archivos clave de la Fase 3
+    - name: Validar estructura real del proyecto
       run: |
-        echo "Validando estructura del Festival..."
+        echo "Verificando archivos críticos en sus carpetas correspondientes..."
         
-        # 1. Validar index.html
-        if [ -f "index.html" ]; then echo "✅ index.html encontrado"; else echo "❌ Falta index.html" && exit 1; fi
-        
-        # 2. Validar README.md
-        if [ -f "README.md" ]; then echo "✅ README.md encontrado"; else echo "❌ Falta README.md" && exit 1; fi
-        
-        # 3. Validar estilos (si tienes la carpeta css tradicional)
-        if [ -f "css/style.css" ]; then 
-          echo "✅ css/style.css encontrado"
-        else 
-          echo "⚠️ Nota: No se encontró css/style.css en la ruta por defecto (ignorar si usas otro framework)"
+        # 1. Validar README.md (Este sí está en la raíz)
+        if [ -f "README.md" ]; then
+          echo "✅ README.md encontrado en la raíz."
+        else
+          echo "❌ ERROR: Falta README.md" && exit 1
         fi
         
-        # 4. Validar scripts (si tienes la carpeta js tradicional)
-        if [ -f "js/script.js" ]; then 
-          echo "✅ js/script.js encontrado"
-        else 
-          echo "⚠️ Nota: No se encontró js/script.js en la ruta por defecto"
+        # 2. Validar index.html dentro de la carpeta frontend
+        if [ -f "frontend/index.html" ]; then
+          echo "✅ frontend/index.html encontrado."
+        else
+          echo "❌ ERROR: Falta index.html en la carpeta frontend" && exit 1
+        fi
+
+        # 3. Validar style.css dentro de la carpeta frontend
+        if [ -f "frontend/style.css" ]; then
+          echo "✅ frontend/style.css encontrado."
+        else
+          echo "❌ ERROR: Falta style.css en la carpeta frontend" && exit 1
+        fi
+
+        # 4. Validar backend
+        if [ -f "backend/app.py" ]; then
+          echo "✅ backend/app.py encontrado."
+        else
+          echo "⚠️ Advertencia: No se encontró app.py en backend."
         fi
