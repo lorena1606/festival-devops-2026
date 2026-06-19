@@ -1,0 +1,41 @@
+name: CI Festival Pipeline
+
+# Aquí se define CUÁNDO se ejecuta (Push y Pull Request a main)
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Aquí se definen las VALIDACIONES de los archivos
+jobs:
+  validate-structure:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v4
+
+    - name: Validar archivos clave de la Fase 3
+      run: |
+        echo "Validando estructura del Festival..."
+        
+        # 1. Validar index.html
+        if [ -f "index.html" ]; then echo "✅ index.html encontrado"; else echo "❌ Falta index.html" && exit 1; fi
+        
+        # 2. Validar README.md
+        if [ -f "README.md" ]; then echo "✅ README.md encontrado"; else echo "❌ Falta README.md" && exit 1; fi
+        
+        # 3. Validar estilos (si tienes la carpeta css tradicional)
+        if [ -f "css/style.css" ]; then 
+          echo "✅ css/style.css encontrado"
+        else 
+          echo "⚠️ Nota: No se encontró css/style.css en la ruta por defecto (ignorar si usas otro framework)"
+        fi
+        
+        # 4. Validar scripts (si tienes la carpeta js tradicional)
+        if [ -f "js/script.js" ]; then 
+          echo "✅ js/script.js encontrado"
+        else 
+          echo "⚠️ Nota: No se encontró js/script.js en la ruta por defecto"
+        fi
