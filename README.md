@@ -21,10 +21,7 @@ Para construir las imágenes personalizadas y levantar los servicios (junto con 
 
 ```bash
 docker-compose up --build
-
-
-
----
+```
 
 ## Integración Continua (CI) con GitHub Actions
 
